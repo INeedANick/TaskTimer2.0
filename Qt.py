@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QFont
 from Componentes.SpinBox import MySpinBox
+from Componentes.Button import MyButton
 import sys
 
 class Ui_MainWindow(object):
@@ -18,11 +19,18 @@ class Ui_MainWindow(object):
         self.grid_layout = QtWidgets.QGridLayout()
         self.central_widget.setLayout(self.grid_layout)
 
+        # ---------------- SpinBox ---------------------------
         self.my_spinbox = MySpinBox()
         self.my_spinbox.setStyleSheet("background-color: black;")
         self.my_spinbox.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        
+
+        # ---------------- Button ---------------------------
+        self.my_button = MyButton()
+        self.my_button.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+
+        # ---------------- Asignar Gridlayout ---------------------------
         self.grid_layout.addWidget(self.my_spinbox, 1, 1, QtCore.Qt.AlignCenter)
+        self.grid_layout.addWidget(self.my_button, 2, 1, QtCore.Qt.AlignCenter)
         
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

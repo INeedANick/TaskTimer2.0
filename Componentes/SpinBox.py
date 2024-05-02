@@ -7,6 +7,7 @@ class MySpinBox(QFrame):
         super().__init__()
 
         self.layout = QtWidgets.QHBoxLayout()
+        font = QtGui.QFont("Bahnschrift", 80)  
 
         # ------------------ SpinBox 1 -------------------------------
         self.spinBox_1 = QtWidgets.QSpinBox()
@@ -16,6 +17,7 @@ class MySpinBox(QFrame):
         self.spinBox_1.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.spinBox_1.setStyleSheet("color: #FFFFFF")
         self.spinBox_1.setMaximum(99)
+        self.spinBox_1.setFont(font)
 
         # ------------------ SpinBox 2 -------------------------------
         self.spinBox_2 = QtWidgets.QSpinBox()
@@ -25,6 +27,8 @@ class MySpinBox(QFrame):
         self.spinBox_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.spinBox_2.setStyleSheet("color: #FFFFFF")
         self.spinBox_2.setMaximum(59)
+        self.spinBox_2.setFont(font)
+
 
         # ------------------ SpinBox 3 -------------------------------
         self.spinBox_3 = QtWidgets.QSpinBox()
@@ -34,6 +38,7 @@ class MySpinBox(QFrame):
         self.spinBox_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.spinBox_3.setStyleSheet("color: #FFFFFF")
         self.spinBox_3.setMaximum(59)
+        self.spinBox_3.setFont(font)
 
         # Cambia el color de resaltado (highlight) a tu preferencia (por ejemplo, rojo)
         palette = self.spinBox_1.palette()
@@ -49,5 +54,3 @@ class MySpinBox(QFrame):
         self.layout.addWidget(self.spinBox_3)
         
         self.setLayout(self.layout)
-
-
