@@ -1,8 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QFont
-from Componentes.SpinBox import MySpinBox
-from Componentes.Button import MyButton
-import sys
+from Componentes.Design import MyDesing
+from Componentes.Logic import MyLogic
 
 class Ui_MainWindow(object):
     def setupUI(self, MainWindow):
@@ -16,24 +15,76 @@ class Ui_MainWindow(object):
         self.central_widget = QtWidgets.QWidget()  
         MainWindow.setCentralWidget(self.central_widget)
 
+        self.my_design = MyDesing(self)
+        self.my_logic = MyLogic(self)
+
         self.grid_layout = QtWidgets.QGridLayout()
         self.central_widget.setLayout(self.grid_layout)
 
-        # ---------------- SpinBox ---------------------------
-        self.my_spinbox = MySpinBox()
-        self.my_spinbox.setStyleSheet("background-color: black;")
-        self.my_spinbox.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        # ======================= SpinBoxes (Frame-Layout) =======================
+        self.spinbox_frame = QtWidgets.QFrame()
+        self.spinbox_frame.setStyleSheet("background-color: black;")
+        self.spinbox_frame.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
 
-        # ---------------- Button ---------------------------
-        self.my_button = MyButton()
-        self.my_button.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.layout = QtWidgets.QHBoxLayout()
+
+        # ======================= SpinBox 1 =======================
+        self.spinBox_1 = QtWidgets.QSpinBox()
+        self.spinBox_1 = self.my_design.add_spinbox(99)
+        self.layout.addWidget(self.spinBox_1)
+
+        # ======================= SpinBox 2 =======================
+        self.spinBox_2 = QtWidgets.QSpinBox()
+        self.spinBox_2 = self.my_design.add_spinbox(59)
+        self.layout.addWidget(self.spinBox_2)
+
+        # ======================= SpinBox 3 =======================
+        self.spinBox_3 = QtWidgets.QSpinBox()
+        self.spinBox_3 = self.my_design.add_spinbox(59)
+        self.layout.addWidget(self.spinBox_3)
+
+        # ===============| 
+        self.spinbox_frame.setLayout(self.layout)
+        self.setLayout(self.layout)
+        # =========================================================
+
+
+        # ======================= PuchButtons (Frame-Layout) =======================
+        self.button_Frame = QtWidgets.QFrame()
+        self.button_Frame.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+
+        self.button_glayout = QtWidgets.QGridLayout()
+        self.button_glayout.setHorizontalSpacing(80)
+
+        # ======================= Button Icons =======================
+        icon_start = QtGui.QIcon("./Imagenes/play-button.png")
+        icon_pause = QtGui.QIcon("./Imagenes/pause.png")
+        icon_clear = QtGui.QIcon("./Imagenes/square-shape.png")
+
+        # ======================= Button Start =======================
+        self.button_start = QtWidgets.QPushButton()
+        self.button_start = self.my_design.add_button(icon_start)
+        self.button_start.setVisible(True)
+        self.button_start.clicked.connect(self.my_logic.toggle_visibility)
+
+        # ======================= Button Pause =======================
+        self.button_pause = QtWidgets.QPushButton()
+        self.button_pause = self.my_design.add_button(icon_pause)
+        self.button_pause.setVisible(False)
+
+        # ======================= Button Clear =======================
+        self.button_clear = QtWidgets.QPushButton()
+        self.button_clear = self.my_design.add_button(icon_clear)
+        self.button_clear.setVisible(False)
+        self.button_clear.clicked.connect(self.my_logic.toggle_visibility)
+
+        # ======================= Button GridLayout =======================
+        self.button_glayout.addWidget(self.button_start, 1, 2, QtCore.Qt.AlignCenter)
+        self.button_glayout.addWidget(self.button_pause, 1, 1, QtCore.Qt.AlignCenter)
+        self.button_glayout.addWidget(self.button_clear, 1, 3, QtCore.Qt.AlignCenter)
+
+        self.button_Frame.setLayout(self.button_glayout)
 
         # ---------------- Asignar Gridlayout ---------------------------
-        self.grid_layout.addWidget(self.my_spinbox, 1, 1, QtCore.Qt.AlignCenter)
-        self.grid_layout.addWidget(self.my_button, 2, 1, QtCore.Qt.AlignCenter)
-        
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    main_window = Ui_MainWindow()
-    main_window.show()
-    sys.exit(app.exec_())
+        self.grid_layout.addWidget(self.spinbox_frame, 1, 1, QtCore.Qt.AlignCenter)
+        self.grid_layout.addWidget(self.button_Frame, 2, 1, QtCore.Qt.AlignCenter)
