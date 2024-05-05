@@ -2,9 +2,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from Componentes.Design import MyDesing
 from Componentes.Logic import MyLogic
 
-from datetime import datetime
-
-
 class Ui_MainWindow(object):
     def setupUI(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -17,11 +14,15 @@ class Ui_MainWindow(object):
         self.central_widget = QtWidgets.QWidget()  
         MainWindow.setCentralWidget(self.central_widget)
 
-        self.my_design = MyDesing()
-        self.my_logic = MyLogic(self)
+        self.global_grid_layout = QtWidgets.QGridLayout()
+        self.central_widget.setLayout(self.global_grid_layout)
 
         self.grid_layout = QtWidgets.QGridLayout()
-        self.central_widget.setLayout(self.grid_layout)
+        self.global_grid_layout.addLayout(self.grid_layout, 1, 1, QtCore.Qt.AlignCenter)
+
+        # ========================================================================
+        self.my_design = MyDesing()
+        self.my_logic = MyLogic(self)
 
         # ======================= SpinBoxes (Frame-Layout) =======================
         self.spinbox_frame = QtWidgets.QFrame()
@@ -76,6 +77,7 @@ class Ui_MainWindow(object):
             else:
                 self.my_logic.toggle_visibility()
                 self.my_logic.set_spinbox_time()
+                self.my_logic.set_time_end()
 
         self.button_start.clicked.connect(push_button)
 
@@ -100,17 +102,6 @@ class Ui_MainWindow(object):
 
         self.button_Frame.setLayout(self.button_glayout)
 
-        # ---------------- Asignar Gridlayout ---------------------------
+        # =============== Asignar Gridlayout (SpinBox/Buttons) ===============
         self.grid_layout.addWidget(self.spinbox_frame, 1, 1, QtCore.Qt.AlignCenter)
         self.grid_layout.addWidget(self.button_Frame, 2, 1, QtCore.Qt.AlignCenter)
-
-        # Obtiene la fecha y hora actual
-        ahora = datetime.now()
-
-        # Imprime la fecha y hora actual en el formato deseado
-        print("Fecha y hora actual: ", ahora)
-        print("Mes: ", ahora.month)
-        print("Día: ", ahora.day)
-        print("Hora: ", ahora.hour)
-        print("Minuto: ", ahora.minute)
-        print("Segundo: ", ahora.second)

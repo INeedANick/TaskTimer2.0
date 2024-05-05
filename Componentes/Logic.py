@@ -1,4 +1,6 @@
-from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5 import QtWidgets, QtCore
+from datetime import datetime, timedelta
+import pandas as pd
 
 class MyLogic(QtWidgets.QFrame):
 
@@ -65,6 +67,40 @@ class MyLogic(QtWidgets.QFrame):
         self.main_window.spinBox_2.setValue(0)
         self.main_window.spinBox_1.setValue(0)
 
+        ruta_excel = 'Componentes\\BD.xlsx'
+        df = pd.read_excel(ruta_excel)
+        df = df.drop(index=0)
+
+        df.to_excel(ruta_excel, index=False)
+
     # ====================== Pause SpinBoxes ======================
     def pause_spinboxes(self):
         self.timer.stop()
+
+    # ====================== Pause SpinBoxes ======================
+    def set_time_end(self):
+        ruta_excel = 'Componentes\\BD.xlsx'
+        df = pd.read_excel(ruta_excel)
+
+        now = datetime.now()
+        current_seconds = self.main_window.spinBox_3.value()
+        current_minutes = self.main_window.spinBox_2.value()
+        current_hours = self.main_window.spinBox_1.value()
+
+        add_time = timedelta(hours=current_hours, 
+                             minutes=current_minutes,
+                             seconds=current_seconds)
+        final_time = now + add_time
+        mes = final_time.month
+        dia = final_time.day
+        hora = final_time.hour 
+        minuto = final_time.minute 
+        segundo = final_time.second 
+
+        df.loc[1, 'MES'] = mes
+        df.loc[1, 'DIA'] = dia
+        df.loc[1, 'HORA'] = hora
+        df.loc[1, 'MINs'] = minuto
+        df.loc[1, 'SEGs'] = segundo
+
+        df.to_excel(ruta_excel, index=False)
