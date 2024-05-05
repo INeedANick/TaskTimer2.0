@@ -18,6 +18,10 @@ class MyLogic(QtWidgets.QFrame):
             self.main_window.button_clear.setVisible(False)
             self.main_window.button_pause.setVisible(False)
             self.main_window.button_start.setVisible(True)
+        elif sender == self.main_window.button_pause:
+            self.main_window.button_clear.setVisible(False)
+            self.main_window.button_pause.setVisible(False)
+            self.main_window.button_start.setVisible(True)
 
     # ====================== SpinBox Time ======================
     def set_spinbox_time(self):
@@ -42,3 +46,12 @@ class MyLogic(QtWidgets.QFrame):
             self.timer = QtCore.QTimer(self)
             self.timer.timeout.connect(lambda: decrement_spinbox(self))
         self.timer.start(1000)
+
+    # ====================== Clean SpinBoxes ======================
+    def clean_spinboxes(self):
+        self.main_window.spinBox_3.setValue(0)
+        self.main_window.spinBox_2.setValue(0)
+        self.main_window.spinBox_1.setValue(0)
+
+    def pause_spinboxes(self):
+        self.timer.stop()

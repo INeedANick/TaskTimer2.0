@@ -78,16 +78,20 @@ class Ui_MainWindow(object):
                 self.my_logic.set_spinbox_time()
 
         self.button_start.clicked.connect(push_button)
+
         # ======================= Button Pause =======================
         self.button_pause = QtWidgets.QPushButton()
         self.button_pause = self.my_design.add_button(icon_pause)
         self.button_pause.setVisible(False)
+        self.button_pause.clicked.connect(self.my_logic.toggle_visibility)
+        self.button_pause.clicked.connect(self.my_logic.pause_spinboxes)
 
         # ======================= Button Clear =======================
         self.button_clear = QtWidgets.QPushButton()
         self.button_clear = self.my_design.add_button(icon_clear)
         self.button_clear.setVisible(False)
         self.button_clear.clicked.connect(self.my_logic.toggle_visibility)
+        self.button_clear.clicked.connect(self.my_logic.clean_spinboxes)
 
         # ======================= Button GridLayout =======================
         self.button_glayout.addWidget(self.button_start, 1, 2, QtCore.Qt.AlignCenter)
