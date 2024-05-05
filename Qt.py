@@ -1,7 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QFont
 from Componentes.Design import MyDesing
 from Componentes.Logic import MyLogic
+
+from datetime import datetime
+
 
 class Ui_MainWindow(object):
     def setupUI(self, MainWindow):
@@ -15,7 +17,7 @@ class Ui_MainWindow(object):
         self.central_widget = QtWidgets.QWidget()  
         MainWindow.setCentralWidget(self.central_widget)
 
-        self.my_design = MyDesing(self)
+        self.my_design = MyDesing()
         self.my_logic = MyLogic(self)
 
         self.grid_layout = QtWidgets.QGridLayout()
@@ -45,16 +47,16 @@ class Ui_MainWindow(object):
 
         # ===============| 
         self.spinbox_frame.setLayout(self.layout)
-        self.setLayout(self.layout)
         # =========================================================
 
 
         # ======================= PuchButtons (Frame-Layout) =======================
         self.button_Frame = QtWidgets.QFrame()
+        self.button_Frame.setStyleSheet("background-color: rgba(0, 0, 0, 0);")
         self.button_Frame.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
 
         self.button_glayout = QtWidgets.QGridLayout()
-        self.button_glayout.setHorizontalSpacing(80)
+        self.button_glayout.setHorizontalSpacing(100)
 
         # ======================= Button Icons =======================
         icon_start = QtGui.QIcon("./Imagenes/play-button.png")
@@ -65,8 +67,17 @@ class Ui_MainWindow(object):
         self.button_start = QtWidgets.QPushButton()
         self.button_start = self.my_design.add_button(icon_start)
         self.button_start.setVisible(True)
-        self.button_start.clicked.connect(self.my_logic.toggle_visibility)
 
+        def push_button():
+            if (self.spinBox_3.value() == 0 and
+                self.spinBox_2.value() == 0 and
+                self.spinBox_1.value() == 0):
+                pass
+            else:
+                self.my_logic.toggle_visibility()
+                self.my_logic.set_spinbox_time()
+
+        self.button_start.clicked.connect(push_button)
         # ======================= Button Pause =======================
         self.button_pause = QtWidgets.QPushButton()
         self.button_pause = self.my_design.add_button(icon_pause)
@@ -88,3 +99,14 @@ class Ui_MainWindow(object):
         # ---------------- Asignar Gridlayout ---------------------------
         self.grid_layout.addWidget(self.spinbox_frame, 1, 1, QtCore.Qt.AlignCenter)
         self.grid_layout.addWidget(self.button_Frame, 2, 1, QtCore.Qt.AlignCenter)
+
+        # Obtiene la fecha y hora actual
+        ahora = datetime.now()
+
+        # Imprime la fecha y hora actual en el formato deseado
+        print("Fecha y hora actual: ", ahora)
+        print("Mes: ", ahora.month)
+        print("Día: ", ahora.day)
+        print("Hora: ", ahora.hour)
+        print("Minuto: ", ahora.minute)
+        print("Segundo: ", ahora.second)

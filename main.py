@@ -10,6 +10,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    main_window = MainWindow()  
-    main_window.show()  
+    main_window = MainWindow()
+    main_window.show()
     sys.exit(app.exec_())

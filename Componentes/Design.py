@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QFrame
 from PyQt5 import QtWidgets, QtGui, QtCore
 
-class MyDesing(QFrame):
-
+class MyDesing():
+    # ===================== Add Spinbox =====================
     def add_spinbox(self, maximun):
             font = QtGui.QFont("Bahnschrift", 80)
             spinBox = QtWidgets.QSpinBox()
@@ -21,6 +21,7 @@ class MyDesing(QFrame):
 
             return spinBox
     
+    # ===================== Add Buttons =====================
     def add_button(self, icon):
         style = ("QPushButton {background-color: qradialgradient(spread:pad, cx:0.506," 
                                 "cy:0.239727, radius:0.834, fx:0.506, fy:0.238409, stop:0 rgba(40, 40, 40, 255),"
