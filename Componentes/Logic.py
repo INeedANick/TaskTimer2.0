@@ -14,10 +14,16 @@ class MyLogic(QtWidgets.QFrame):
             self.main_window.button_start.setVisible(False)
             self.main_window.button_clear.setVisible(True)
             self.main_window.button_pause.setVisible(True)
+            self.main_window.spinBox_1.setEnabled(False)
+            self.main_window.spinBox_2.setEnabled(False)
+            self.main_window.spinBox_3.setEnabled(False)
         elif sender == self.main_window.button_clear:
             self.main_window.button_clear.setVisible(False)
             self.main_window.button_pause.setVisible(False)
             self.main_window.button_start.setVisible(True)
+            self.main_window.spinBox_1.setEnabled(True)
+            self.main_window.spinBox_2.setEnabled(True)
+            self.main_window.spinBox_3.setEnabled(True)
         elif sender == self.main_window.button_pause:
             self.main_window.button_clear.setVisible(False)
             self.main_window.button_pause.setVisible(False)
@@ -41,6 +47,12 @@ class MyLogic(QtWidgets.QFrame):
                 self.main_window.spinBox_3.setValue(59)
             else:
                 self.timer.stop()
+                self.main_window.button_clear.setVisible(False)
+                self.main_window.button_pause.setVisible(False)
+                self.main_window.button_start.setVisible(True)
+                self.main_window.spinBox_1.setEnabled(True)
+                self.main_window.spinBox_2.setEnabled(True)
+                self.main_window.spinBox_3.setEnabled(True)
         
         if self.timer is None:
             self.timer = QtCore.QTimer(self)
@@ -53,5 +65,6 @@ class MyLogic(QtWidgets.QFrame):
         self.main_window.spinBox_2.setValue(0)
         self.main_window.spinBox_1.setValue(0)
 
+    # ====================== Pause SpinBoxes ======================
     def pause_spinboxes(self):
         self.timer.stop()
