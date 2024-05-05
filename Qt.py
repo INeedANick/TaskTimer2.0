@@ -10,7 +10,8 @@ class Ui_MainWindow(object):
         "background-color: qradialgradient(spread:pad, cx:0.506, cy:0.239727, radius:0.834," 
         "fx:0.506, fy:0.238409, stop:0 rgba(78, 78, 78, 255), stop:1 rgba(55, 55, 55, 255));"
         )
-        
+
+        # ========================================================================
         self.central_widget = QtWidgets.QWidget()  
         MainWindow.setCentralWidget(self.central_widget)
 
@@ -23,6 +24,8 @@ class Ui_MainWindow(object):
         # ========================================================================
         self.my_design = MyDesing()
         self.my_logic = MyLogic(self)
+        # ========================================================================
+
 
         # ======================= SpinBoxes (Frame-Layout) =======================
         self.spinbox_frame = QtWidgets.QFrame()

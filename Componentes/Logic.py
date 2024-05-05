@@ -77,7 +77,7 @@ class MyLogic(QtWidgets.QFrame):
     def pause_spinboxes(self):
         self.timer.stop()
 
-    # ====================== Pause SpinBoxes ======================
+    # ====================== Save Time ======================
     def set_time_end(self):
         ruta_excel = 'Componentes\\BD.xlsx'
         df = pd.read_excel(ruta_excel)
@@ -87,20 +87,28 @@ class MyLogic(QtWidgets.QFrame):
         current_minutes = self.main_window.spinBox_2.value()
         current_hours = self.main_window.spinBox_1.value()
 
-        add_time = timedelta(hours=current_hours, 
-                             minutes=current_minutes,
+        add_time = timedelta(hours=current_hours, minutes=current_minutes,
                              seconds=current_seconds)
-        final_time = now + add_time
-        mes = final_time.month
-        dia = final_time.day
-        hora = final_time.hour 
-        minuto = final_time.minute 
-        segundo = final_time.second 
+        
+        self.final_time = now + add_time
 
-        df.loc[1, 'MES'] = mes
-        df.loc[1, 'DIA'] = dia
-        df.loc[1, 'HORA'] = hora
-        df.loc[1, 'MINs'] = minuto
-        df.loc[1, 'SEGs'] = segundo
+        df.loc[1, 'MES'] = self.final_time.month
+        df.loc[1, 'DIA'] = self.final_time.day
+        df.loc[1, 'HORA'] = self.final_time.hour
+        df.loc[1, 'MINs'] = self.final_time.minute
+        df.loc[1, 'SEGs'] = self.final_time.second
 
         df.to_excel(ruta_excel, index=False)
+
+    def rest_time(self):
+        print("rest_time() se ha ejecutado")
+        ruta_excel = 'Componentes\\BD.xlsx'
+        df = pd.read_excel(ruta_excel)
+        fila_2 = df.loc[0]
+
+        tiene_informacion = not fila_2.isnull().all()
+
+        if tiene_informacion:
+            print("La fila 2 contiene información.")
+        else:
+            print("La fila 2 está vacía.")
