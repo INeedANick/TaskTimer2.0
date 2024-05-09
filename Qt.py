@@ -16,6 +16,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.central_widget)
 
         self.global_grid_layout = QtWidgets.QGridLayout()
+        self.global_grid_layout.setContentsMargins(0, 25, 0, 0)
         self.central_widget.setLayout(self.global_grid_layout)
 
         self.grid_layout = QtWidgets.QGridLayout()
@@ -105,6 +106,20 @@ class Ui_MainWindow(object):
 
         self.button_Frame.setLayout(self.button_glayout)
 
+        # ======================= Scroll Area =======================
+        self.scroll_area = QtWidgets.QScrollArea()
+        self.scroll_area.setStyleSheet("""
+            QScrollArea {
+                background-color: qlineargradient(spread:reflect, x1:0.5, y1:0.5, x2:0, y2:0.5,
+                stop:0 rgba(22, 22, 22, 255), stop:0 rgba(18, 18, 18, 255));
+            }
+            QScrollArea {
+                border: none;
+            }
+        """)
+        self.scroll_area.setWidgetResizable(True)
+        
         # =============== Asignar Gridlayout (SpinBox/Buttons) ===============
         self.grid_layout.addWidget(self.spinbox_frame, 1, 1, QtCore.Qt.AlignCenter)
         self.grid_layout.addWidget(self.button_Frame, 2, 1, QtCore.Qt.AlignCenter)
+        self.global_grid_layout.addWidget(self.scroll_area, 2, 1)
