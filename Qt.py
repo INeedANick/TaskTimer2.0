@@ -5,7 +5,7 @@ from Componentes.Logic import MyLogic
 class Ui_MainWindow(object):
     def setupUI(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1100, 600)
+        MainWindow.resize(1100, 620)
         MainWindow.setStyleSheet(
         "background-color: qradialgradient(spread:pad, cx:0.506, cy:0.239727, radius:0.834," 
         "fx:0.506, fy:0.238409, stop:0 rgba(78, 78, 78, 255), stop:1 rgba(55, 55, 55, 255));"
@@ -15,23 +15,30 @@ class Ui_MainWindow(object):
         self.central_widget = QtWidgets.QWidget()  
         MainWindow.setCentralWidget(self.central_widget)
 
-        self.global_grid_layout = QtWidgets.QGridLayout()
-        self.global_grid_layout.setContentsMargins(0, 25, 0, 0)
-        self.central_widget.setLayout(self.global_grid_layout)
+        self.gl_global = QtWidgets.QGridLayout()
+        self.gl_global.setContentsMargins(0, 25, 0, 0)
+        self.central_widget.setLayout(self.gl_global)
 
-        self.grid_layout = QtWidgets.QGridLayout()
-        self.global_grid_layout.addLayout(self.grid_layout, 1, 1, QtCore.Qt.AlignCenter)
+        self.gl_upper_main = QtWidgets.QGridLayout()
+        self.gl_global.addLayout(self.gl_upper_main, 1, 1, QtCore.Qt.AlignCenter)
+
+        self.gl_crono = QtWidgets.QGridLayout()
+        self.gl_upper_main.addLayout(self.gl_crono, 1, 3, QtCore.Qt.AlignCenter)
+
+        self.gl_buttons_crono = QtWidgets.QGridLayout()
+        self.gl_buttons_crono.setHorizontalSpacing(80)
+        self.gl_crono.addLayout(self.gl_buttons_crono, 2, 2, QtCore.Qt.AlignCenter)
 
         # ========================================================================
         self.my_design = MyDesing()
         self.my_logic = MyLogic(self)
         # ========================================================================
 
-
         # ======================= SpinBoxes (Frame-Layout) =======================
         self.spinbox_frame = QtWidgets.QFrame()
         self.spinbox_frame.setStyleSheet("background-color: black;")
         self.spinbox_frame.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.gl_crono.addWidget(self.spinbox_frame, 1, 2, QtCore.Qt.AlignCenter)
 
         self.layout = QtWidgets.QHBoxLayout()
 
@@ -50,20 +57,10 @@ class Ui_MainWindow(object):
         self.spinBox_3 = self.my_design.add_spinbox(59)
         self.layout.addWidget(self.spinBox_3)
 
-        # ===============| 
         self.spinbox_frame.setLayout(self.layout)
         # =========================================================
 
-
-        # ======================= PuchButtons (Frame-Layout) =======================
-        self.button_Frame = QtWidgets.QFrame()
-        self.button_Frame.setStyleSheet("background-color: rgba(0, 0, 0, 0);")
-        self.button_Frame.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-
-        self.button_glayout = QtWidgets.QGridLayout()
-        self.button_glayout.setHorizontalSpacing(100)
-
-        # ======================= Button Icons =======================
+         # ======================= Button Icons =======================
         icon_start = QtGui.QIcon("./Imagenes/play-button.png")
         icon_pause = QtGui.QIcon("./Imagenes/pause.png")
         icon_clear = QtGui.QIcon("./Imagenes/square-shape.png")
@@ -100,11 +97,9 @@ class Ui_MainWindow(object):
         self.button_clear.clicked.connect(self.my_logic.clean_spinboxes)
 
         # ======================= Button GridLayout =======================
-        self.button_glayout.addWidget(self.button_start, 1, 2, QtCore.Qt.AlignCenter)
-        self.button_glayout.addWidget(self.button_pause, 1, 1, QtCore.Qt.AlignCenter)
-        self.button_glayout.addWidget(self.button_clear, 1, 3, QtCore.Qt.AlignCenter)
-
-        self.button_Frame.setLayout(self.button_glayout)
+        self.gl_buttons_crono.addWidget(self.button_start, 1, 2, QtCore.Qt.AlignCenter)
+        self.gl_buttons_crono.addWidget(self.button_pause, 1, 1, QtCore.Qt.AlignCenter)
+        self.gl_buttons_crono.addWidget(self.button_clear, 1, 3, QtCore.Qt.AlignCenter)
 
         # ======================= Scroll Area =======================
         self.scroll_area = QtWidgets.QScrollArea()
@@ -118,8 +113,16 @@ class Ui_MainWindow(object):
             }
         """)
         self.scroll_area.setWidgetResizable(True)
-        
-        # =============== Asignar Gridlayout (SpinBox/Buttons) ===============
-        self.grid_layout.addWidget(self.spinbox_frame, 1, 1, QtCore.Qt.AlignCenter)
-        self.grid_layout.addWidget(self.button_Frame, 2, 1, QtCore.Qt.AlignCenter)
-        self.global_grid_layout.addWidget(self.scroll_area, 2, 1)
+        self.gl_global.addWidget(self.scroll_area, 2, 1)
+
+        # ======================= Buttons Tasking Area =======================
+        self.add_task = QtWidgets.QPushButton("+ Task")
+        self.add_group = QtWidgets.QPushButton("+ Gruop")
+
+        self.up_task = QtWidgets.QPushButton("<")
+        self.down_task = QtWidgets.QPushButton(">")
+
+        self.gl_upper_main.addWidget(self.add_task, 1, 1, QtCore.Qt.AlignBottom)
+        self.gl_upper_main.addWidget(self.add_group, 1, 2, QtCore.Qt.AlignBottom)
+        self.gl_upper_main.addWidget(self.up_task, 1, 4, QtCore.Qt.AlignBottom)
+        self.gl_upper_main.addWidget(self.down_task, 1, 5, QtCore.Qt.AlignBottom)
