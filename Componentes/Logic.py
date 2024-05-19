@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from datetime import datetime, timedelta
 import pandas as pd
+import json
 
 class MyLogic(QtWidgets.QFrame):
 
@@ -67,11 +68,13 @@ class MyLogic(QtWidgets.QFrame):
         self.main_window.spinBox_2.setValue(0)
         self.main_window.spinBox_1.setValue(0)
 
-        ruta_excel = 'Componentes\\BD.xlsx'
-        df = pd.read_excel(ruta_excel)
-        df = df.drop(index=0)
+        ruta_json = 'Componentes/BD.json'
+        data = {
+                "final_time": None
+            }
 
-        df.to_excel(ruta_excel, index=False)
+        with open(ruta_json, 'w') as file:
+            json.dump(data, file, indent=4)
 
     # ====================== Pause SpinBoxes ======================
     def pause_spinboxes(self):
@@ -79,36 +82,47 @@ class MyLogic(QtWidgets.QFrame):
 
     # ====================== Save Time ======================
     def set_time_end(self):
-        ruta_excel = 'Componentes\\BD.xlsx'
-        df = pd.read_excel(ruta_excel)
+        ruta_json = 'Componentes/BD.json'
 
         now = datetime.now()
         current_seconds = self.main_window.spinBox_3.value()
         current_minutes = self.main_window.spinBox_2.value()
         current_hours = self.main_window.spinBox_1.value()
 
-        add_time = timedelta(hours=current_hours, minutes=current_minutes,
+        add_time = timedelta(hours=current_hours, 
+                             minutes=current_minutes, 
                              seconds=current_seconds)
-        
-        self.final_time = now + add_time
+        final_time = now + add_time
 
-        df.loc[1, 'MES'] = self.final_time.month
-        df.loc[1, 'DIA'] = self.final_time.day
-        df.loc[1, 'HORA'] = self.final_time.hour
-        df.loc[1, 'MINs'] = self.final_time.minute
-        df.loc[1, 'SEGs'] = self.final_time.second
+        data = {
+            "final_time": {
+                "MES": final_time.month,
+                "DIA": final_time.day,
+                "HORA": final_time.hour,
+                "MINs": final_time.minute,
+                "SEGs": final_time.second
+            }
+        }
 
-        df.to_excel(ruta_excel, index=False)
+        with open(ruta_json, 'w') as file:
+            json.dump(data, file, indent=4)
+    
+    # ====================== Verificar Final Time ======================
+    def is_final_time_null():
+        ruta_json = 'Componentes/BD.json'
+        try:
+            with open(ruta_json, 'r') as file:
+                data = json.load(file)
+                final_time_data = data.get('final_time')
+                return final_time_data is None
+        except (FileNotFoundError, KeyError, ValueError):
+            return True
 
-    def rest_time(self):
-        print("rest_time() se ha ejecutado")
-        ruta_excel = 'Componentes\\BD.xlsx'
-        df = pd.read_excel(ruta_excel)
-        fila_2 = df.loc[0]
+    if is_final_time_null():
+        print("final_time es null")
+    else:
+        print("final_time tiene un valor")
 
-        tiene_informacion = not fila_2.isnull().all()
-
-        if tiene_informacion:
-            print("La fila 2 contiene información.")
-        else:
-            print("La fila 2 está vacía.")
+    def add_task(self):
+        new_te = QtWidgets.QTextEdit()
+        self.main_window.scroll_area.setWidget(new_te)

@@ -20,13 +20,15 @@ class Ui_MainWindow(object):
         self.central_widget.setLayout(self.gl_global)
 
         self.gl_upper_main = QtWidgets.QGridLayout()
-        self.gl_global.addLayout(self.gl_upper_main, 1, 1, QtCore.Qt.AlignCenter)
+        self.gl_upper_main.setContentsMargins(10, 2, 10, 2)
+        self.gl_global.addLayout(self.gl_upper_main, 1, 1)
 
         self.gl_crono = QtWidgets.QGridLayout()
         self.gl_upper_main.addLayout(self.gl_crono, 1, 3, QtCore.Qt.AlignCenter)
 
         self.gl_buttons_crono = QtWidgets.QGridLayout()
         self.gl_buttons_crono.setHorizontalSpacing(80)
+        self.gl_buttons_crono.setContentsMargins(0, 0, 0, 10)
         self.gl_crono.addLayout(self.gl_buttons_crono, 2, 2, QtCore.Qt.AlignCenter)
 
         # ========================================================================
@@ -117,12 +119,13 @@ class Ui_MainWindow(object):
 
         # ======================= Buttons Tasking Area =======================
         self.add_task = QtWidgets.QPushButton("+ Task")
+        self.add_task.clicked.connect(self.my_logic.add_task)
         self.add_group = QtWidgets.QPushButton("+ Gruop")
 
         self.up_task = QtWidgets.QPushButton("<")
         self.down_task = QtWidgets.QPushButton(">")
 
-        self.gl_upper_main.addWidget(self.add_task, 1, 1, QtCore.Qt.AlignBottom)
-        self.gl_upper_main.addWidget(self.add_group, 1, 2, QtCore.Qt.AlignBottom)
-        self.gl_upper_main.addWidget(self.up_task, 1, 4, QtCore.Qt.AlignBottom)
-        self.gl_upper_main.addWidget(self.down_task, 1, 5, QtCore.Qt.AlignBottom)
+        self.gl_upper_main.addWidget(self.add_task, 1, 1, alignment=QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeft)
+        self.gl_upper_main.addWidget(self.add_group, 1, 2, alignment=QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeft)
+        self.gl_upper_main.addWidget(self.up_task, 1, 4, alignment=QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
+        self.gl_upper_main.addWidget(self.down_task, 1, 5, alignment=QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
