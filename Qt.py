@@ -129,3 +129,9 @@ class Ui_MainWindow(object):
         self.gl_upper_main.addWidget(self.add_group, 1, 2, alignment=QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeft)
         self.gl_upper_main.addWidget(self.up_task, 1, 4, alignment=QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
         self.gl_upper_main.addWidget(self.down_task, 1, 5, alignment=QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
+
+        if MainWindow.i == 1:
+            print("hello world")
+            self.my_logic.set_time()
+
+    

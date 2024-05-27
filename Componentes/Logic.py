@@ -1,6 +1,5 @@
 from PyQt5 import QtWidgets, QtCore
 from datetime import datetime, timedelta
-import pandas as pd
 import json
 
 class MyLogic(QtWidgets.QFrame):
@@ -117,12 +116,34 @@ class MyLogic(QtWidgets.QFrame):
                 return final_time_data is None
         except (FileNotFoundError, KeyError, ValueError):
             return True
+        
+    # ====================== Imprimir Tiempo Corregido ======================
+    def set_time(self):
+        json_file_path = 'Componentes/BD.json'
 
-    if is_final_time_null():
-        print("final_time es null")
-    else:
-        print("final_time tiene un valor")
+        with open(json_file_path, 'r') as file:
+            data = json.load(file)
 
+        final_time = data['final_time']
+
+        final_time_dt = datetime(year=datetime.now().year, 
+                                month=final_time['MES'], 
+                                day=final_time['DIA'], 
+                                hour=final_time['HORA'], 
+                                minute=final_time['MINs'], 
+                                second=final_time['SEGs'])
+
+        now = datetime.now()
+        time_difference = final_time_dt - now
+
+        if time_difference != 0:
+            total_seconds = time_difference.total_seconds()
+            total_seconds = int(total_seconds)
+            self.main_window.spinBox_1.setValue(total_seconds // 3600)
+            self.main_window.spinBox_2.setValue((total_seconds % 3600) // 60)
+            self.main_window.spinBox_3.setValue(total_seconds % 60)
+
+    # ====================== Añadir Tarea ======================
     def add_task(self):
         new_te = QtWidgets.QTextEdit()
         self.main_window.scroll_area.setWidget(new_te)

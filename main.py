@@ -6,6 +6,7 @@ from Componentes.Logic import MyLogic
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
+        self.i = 0
         self.setupUI(self)
         self.timer = None
 
@@ -15,6 +16,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             print("final_time es null")
         else:
             print("final_time tiene un valor")
+            self.i = 1
+            self.update_ui()
+        
+    def update_ui(self):
+        self.setupUI(self)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
