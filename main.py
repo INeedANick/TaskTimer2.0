@@ -13,9 +13,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def showEvent(self, event):
         super().showEvent(event)
         if MyLogic.is_final_time_null():
-            print("final_time es null")
+            pass
         else:
-            print("final_time tiene un valor")
             self.i = 1
             self.update_ui()
         

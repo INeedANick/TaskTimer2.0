@@ -62,7 +62,7 @@ class Ui_MainWindow(object):
         self.spinbox_frame.setLayout(self.layout)
         # =========================================================
 
-         # ======================= Button Icons =======================
+        # ======================= Button Icons =======================
         icon_start = QtGui.QIcon("./Imagenes/play-button.png")
         icon_pause = QtGui.QIcon("./Imagenes/pause.png")
         icon_clear = QtGui.QIcon("./Imagenes/square-shape.png")
@@ -130,8 +130,10 @@ class Ui_MainWindow(object):
         self.gl_upper_main.addWidget(self.up_task, 1, 4, alignment=QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
         self.gl_upper_main.addWidget(self.down_task, 1, 5, alignment=QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
 
+        # ======================= Restore Timer =======================
         if MainWindow.i == 1:
-            print("hello world")
             self.my_logic.set_time()
+            self.my_logic.set_spinbox_time()
+            self.button_start.click()
 
     
