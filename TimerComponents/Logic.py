@@ -1,13 +1,14 @@
 from PyQt5 import QtWidgets, QtCore
 from datetime import datetime, timedelta
+from .Desing import MyDesing
 import json
 
 class MyLogic(QtWidgets.QFrame):
-
     def __init__(self, main_window):
         super().__init__()
         self.main_window = main_window
         self.timer = None  
+        self.my_design = MyDesing()
 
     # ===================== Buttons Visibility =====================
     def toggle_visibility(self):
@@ -67,7 +68,7 @@ class MyLogic(QtWidgets.QFrame):
         self.main_window.spinBox_2.setValue(0)
         self.main_window.spinBox_1.setValue(0)
 
-        ruta_json = 'Componentes/BD.json'
+        ruta_json = 'TimerComponents/BD.json'
         data = {
                 "final_time": None
             }
@@ -81,7 +82,7 @@ class MyLogic(QtWidgets.QFrame):
 
     # ====================== Save Time ======================
     def set_time_end(self):
-        ruta_json = 'Componentes/BD.json'
+        ruta_json = 'TimerComponents/BD.json'
 
         now = datetime.now()
         current_seconds = self.main_window.spinBox_3.value()
@@ -108,7 +109,7 @@ class MyLogic(QtWidgets.QFrame):
     
     # ====================== Verificar Final Time ======================
     def is_final_time_null():
-        ruta_json = 'Componentes/BD.json'
+        ruta_json = 'TimerComponents/BD.json'
         try:
             with open(ruta_json, 'r') as file:
                 data = json.load(file)
@@ -119,7 +120,7 @@ class MyLogic(QtWidgets.QFrame):
         
     # ====================== Imprimir Tiempo Corregido ======================
     def set_time(self):
-        json_file_path = 'Componentes/BD.json'
+        json_file_path = 'TimerComponents/BD.json'
 
         with open(json_file_path, 'r') as file:
             data = json.load(file)
@@ -142,8 +143,3 @@ class MyLogic(QtWidgets.QFrame):
             self.main_window.spinBox_1.setValue(total_seconds // 3600)
             self.main_window.spinBox_2.setValue((total_seconds % 3600) // 60)
             self.main_window.spinBox_3.setValue(total_seconds % 60)
-
-    # ====================== Añadir Tarea ======================
-    def add_task(self):
-        new_te = QtWidgets.QTextEdit()
-        self.main_window.scroll_area.setWidget(new_te)

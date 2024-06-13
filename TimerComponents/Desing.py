@@ -4,13 +4,23 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 class MyDesing():
     # ===================== Add Spinbox =====================
     def add_spinbox(self, maximun):
+            style = ("""
+                QSpinBox {
+                    color: #bfbfbf;
+                    border: none;
+                    selection-background-color: transparent;
+                }
+                QSpinBox::focus {
+                    outline: none;
+                }
+                """)
             font = QtGui.QFont("Bahnschrift", 80)
             spinBox = QtWidgets.QSpinBox()
             spinBox.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
             spinBox.setFont(QtGui.QFont("", 72))
             spinBox.setEnabled(True)
             spinBox.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            spinBox.setStyleSheet("color: #FFFFFF")
+            spinBox.setStyleSheet(style)
             spinBox.setMaximum(maximun)
             spinBox.setFont(font)
 
